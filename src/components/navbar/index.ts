@@ -1,0 +1,1 @@
+export { default } from "./Navbar"; // Reexportando Navbar.tsx

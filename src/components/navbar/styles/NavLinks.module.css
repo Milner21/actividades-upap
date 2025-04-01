@@ -1,0 +1,30 @@
+.navLinks {
+    display: flex;
+    flex-direction: row; /* Alinea los enlaces en fila en desktop */
+    gap: 20px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .navLinksMobile {
+    display: flex;
+    flex-direction: column; /* Apila los enlaces en el sidebar */
+    gap: 20px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .navLinksMobile a, .navLinks a {
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    transition: color 0.3s ease;
+    color: var(--text-color);
+  }
+  
+  .navLinksMobile a:hover, .navLinks a:hover {
+    color: var(--text-color-hover);
+  }
+  

@@ -6,10 +6,13 @@ import Admin from './pages/Admin';
 import Register from './pages/Register';
 import CreateCourse from './pages/CreateCourse';
 import CourseInscritos from './pages/CourseInscritos';
+import { Footer, Navbar } from './components';
+
 
 const App: React.FC = () => {
   return (
     <Router>
+      <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/admin" element={<Admin />} />
@@ -17,6 +20,7 @@ const App: React.FC = () => {
         <Route path="/admin/course/:id" element={<CourseInscritos />} />
         <Route path="/register" element={<Register />} />
       </Routes>
+      <Footer />
     </Router>
   );
 };
