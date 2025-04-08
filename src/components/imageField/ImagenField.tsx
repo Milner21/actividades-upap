@@ -1,6 +1,6 @@
-import React, { useState, ChangeEvent, FC } from "react";
-import { Field } from "@base-ui-components/react/field";
-import styles from "./ImagenField.module.css";
+import { useState, ChangeEvent, FC } from 'react';
+import { Field } from '@base-ui-components/react/field';
+import styles from './ImagenField.module.css';
 
 interface ImageFieldProps {
   label: string; // Etiqueta del campo
