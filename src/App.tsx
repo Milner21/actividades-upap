@@ -1,27 +1,39 @@
 import React from 'react';
 import './App.css'; // Estilos generales de la aplicación
-import Home from './pages/Home'; // Importamos la página de inicio (Home)
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Admin from './pages/Admin';
 import Register from './pages/Register';
-import CreateCourse from './pages/CreateCourse';
 import CourseInscritos from './pages/CourseInscritos';
 import { Footer, Navbar } from './components';
-
+import { CreateCourse, Home } from './pages';
+import { ToastContainer } from 'react-toastify';
 
 const App: React.FC = () => {
   return (
-    <Router>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/admin" element={<Admin />} />
-        <Route path="/admin/create" element={<CreateCourse />} />
-        <Route path="/admin/course/:id" element={<CourseInscritos />} />
-        <Route path="/register" element={<Register />} />
-      </Routes>
-      <Footer />
-    </Router>
+    <>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        draggable
+        theme="colored"
+      />
+      <Router>
+        <Navbar />
+        <div className="container">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/sp/admin" element={<Admin />} />
+            <Route path="/sp/admin/crear-curso" element={<CreateCourse />} />
+            <Route path="/sp/admin/course/:id" element={<CourseInscritos />} />
+            <Route path="/register" element={<Register />} />
+          </Routes>
+        </div>
+        <Footer />
+      </Router>
+    </>
   );
 };
 

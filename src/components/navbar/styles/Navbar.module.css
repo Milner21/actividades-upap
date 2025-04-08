@@ -4,14 +4,19 @@
   justify-content: space-between;
   align-items: center;
   background-color: var(--primary-dark);
-  padding: 15px 20px;
+  margin: 0;
+  padding-block: 15px;
   color: var(--text-color);
+  position: fixed;
+  width: 100%;
+  z-index: 1;
 }
 
 /* Logo */
 .logo {
   font-size: 24px;
   font-weight: bold;
+  padding-left: 15px;
 }
 
 .logo img {
@@ -26,11 +31,12 @@
 /* Oculta el menú hamburguesa en pantallas grandes */
 .hamburger {
   display: none;
-  font-size: 24px;
+  font-size: 28px;
   background: none;
   border: none;
   color: white;
   cursor: pointer;
+  padding-right: 10px;
 }
 
 /* Responsive */

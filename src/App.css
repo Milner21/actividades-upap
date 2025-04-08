@@ -9,4 +9,11 @@
   --primary-dark: #60001e; /* Rojo */
   --text-color: #ffffff;
   --text-color-hover: #d3d3d3;
+  --border-inactive: #ccc;
+  --text-color-red: #720f0f;
+  --success: oklch(44.8% 0.119 151.328);
+}
+.container{
+  padding-top: 100px;
+  min-height:calc(100vh - 144px);
 }

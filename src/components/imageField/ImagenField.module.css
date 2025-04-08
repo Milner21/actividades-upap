@@ -1,0 +1,75 @@
+/* Ocultar el input de tipo file */
+.hiddenInput {
+  display: none;
+}
+.fieldRoot {
+}
+.inputContianer {
+  display: flex;
+  flex-direction: column;
+  justify-self: center;
+  align-items: center;
+  gap: 2px;
+  width: 100%;
+  max-width: 350px;
+  margin-block: 0.5rem;
+}
+
+.buttonContianer {
+  border: solid 1px var(--border-inactive);
+  width: 100%;
+  border-radius: 0.375rem;
+  padding: 16px 0;
+}
+/* Estilizar label de subida de archivo */
+.fieldLabel {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  font-weight: bold;
+  user-select: none;
+  color: var(--text-color-red);
+  text-align: left;
+  width: 100%;
+}
+
+/* Estilizar el botón de subida de archivo */
+.uploadButton {
+  display: inline-block;
+  padding: 12px 16px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  background-color: var(--text-color-red);
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  width: 200px;
+  border: solid 1px var(--text-color-red);
+}
+
+.uploadButton:hover {
+  background-color: #fff;
+  color: var(--text-color-red);
+}
+
+.imagePreview {
+  margin-top: 12px;
+  display: flex;
+  justify-content: center;
+}
+
+.imagePreview img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.noImageLabel {
+  font-size: 14px;
+  color: #757575;
+  text-align: center;
+  margin-top: 12px;
+}

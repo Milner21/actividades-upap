@@ -101,7 +101,7 @@ const Admin = () => {
       <h1 className="text-2xl font-bold mb-6">Administración de Cursos</h1>
 
       <Link
-        to="/admin/create"
+        to="/admin/crear-curso"
         className="mb-4 inline-block text-white bg-green-500 py-2 px-4 rounded hover:bg-green-600"
       >
         Agregar Curso
