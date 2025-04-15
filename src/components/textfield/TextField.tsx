@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from "react";
+import { ChangeEvent, FC } from "react";
 import { Field } from "@base-ui-components/react/field";
 import styles from "./TextField.module.css";
 
@@ -16,7 +16,7 @@ interface CustomFieldProps {
   name?: string;
 }
 
-const TextField: React.FC<CustomFieldProps> = ({
+const TextField: FC<CustomFieldProps> = ({
   label,
   placeholder = "Introduce valor", // Placeholder por defecto
   type = "text", // Tipo por defecto

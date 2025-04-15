@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { supabase } from '../utils/supabaseClient'; // Asegúrate de importar el cliente de Supabase
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Curso } from '../utils/Types';
+import { Curso } from '../types/Course';
 
 const Register = () => {
   // Obtener los datos del curso desde la ubicación
@@ -53,7 +53,7 @@ const Register = () => {
     // Actualizar la cantidad de cupos disponibles
     const { error: updateError } = await supabase
       .from('cursos')
-      .update({ cupos_disponibles: curso.cupos_disponibles - 1 })
+      .update({ cupos_disponibles: curso.cupos - 1 })
       .eq('id', curso.id);
 
     if (updateError) {

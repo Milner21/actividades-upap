@@ -1,0 +1,114 @@
+/* Input.module.css */
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px; /* Espaciado entre campos */
+  width: 100%; /* Asegura que ocupe todo el ancho del contenedor */
+}
+
+.inputLabel {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 8px; /* Espaciado entre etiqueta y campo */
+  color: #333; /* Color de texto */
+}
+
+.inputField {
+  padding: 12px 16px; /* Espaciado interno */
+  font-size: 16px; /* Tamaño de fuente */
+  font-family: Arial, sans-serif;
+  border: 1px solid #ccc; /* Borde gris claro */
+  border-radius: 8px; /* Bordes redondeados */
+  outline: none; /* Remueve el borde azul del navegador */
+  transition: all 0.3s ease; /* Transición suave */
+  box-sizing: border-box; /* Incluye padding y borde en el ancho */
+}
+
+.inputField:focus {
+  border-color: #3f51b5; /* Azul Material UI */
+  box-shadow: 0 0 4px rgba(63, 81, 181, 0.5); /* Efecto de brillo */
+}
+
+.inputField::placeholder {
+  color: #999; /* Color del placeholder */
+  font-style: italic; /* Apariencia opcional */
+}
+
+.inputField:disabled {
+  background-color: #f5f5f5; /* Fondo gris claro */
+  color: #aaa; /* Texto más apagado */
+  cursor: not-allowed; /* Cursor de no permitido */
+}
+
+/* Form.module.css */
+.formContent{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  padding: 0 ;
+  margin: auto;
+}
+.form {
+  width: 100%;
+  max-width: 450px;
+  margin: 15px;
+  border-radius: 10px;
+  border: solid 1px var(--border-inactive);
+  padding: 1.5rem
+}
+/* Divider */
+.divider {
+  margin: 20px 0;
+  border: 0;
+  height: 1px;
+  background-color: #ccc;
+}
+
+/* Contenedor para los botones */
+.buttonContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+/* Botón base */
+.button {
+  padding: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 150px; /* Tamaño máximo */
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+/* Botón rojo para regresar */
+.backButton {
+  background-color: var(--text-color-red); /* Rojo */
+  color: white;
+}
+
+.backButton:hover {
+  box-shadow: 0 0 8px rgba(187, 60, 60, 0.3);
+}
+
+/* Botón verde para crear */
+.submitButton {
+  background-color: var(--success);
+  color: white;
+}
+
+.submitButton:hover {
+  background-color: #388e3c; 
+  box-shadow: 0 0 8px rgba(68, 187, 60, 0.3);
+}
+
+.submitButton:disabled {
+  background-color: #a5d6a7; /* Verde claro */
+  cursor: not-allowed;
+}

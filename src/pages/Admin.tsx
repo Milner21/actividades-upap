@@ -78,7 +78,7 @@ const Admin: React.FC = () => {
 import { useEffect, useState } from 'react';
 import { supabase } from '../utils/supabaseClient'; // Cliente de Supabase
 import { Link } from 'react-router-dom';
-import { Curso } from '../utils/Types'; // Interfaz Curso
+import { Curso } from '../types/Course'; // Interfaz Curso
 
 const Admin = () => {
   const [cursos, setCursos] = useState<Curso[]>([]);
@@ -127,10 +127,10 @@ const Admin = () => {
                 {curso.nombre}
               </td>
               <td className="border border-gray-300 px-4 py-2">
-                {curso.fecha_realizacion}
+                {curso.fecha}
               </td>
               <td className="border border-gray-300 px-4 py-2">
-                {curso.cupos_disponibles}
+                {curso.cupos}
               </td>
               <td className="border border-gray-300 px-4 py-2">
                 <Link

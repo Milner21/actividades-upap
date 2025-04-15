@@ -15,7 +15,7 @@ const NavLinks = ({ isMobile, closeMenu }: NavLinksProps) => {
   return (
     <ul className={isMobile ? styles.navLinksMobile : styles.navLinks}>
       {navItems.map((item) => (
-        <li key={item.path}>
+        <li key={item.name}>
           <a href={item.path} onClick={isMobile ? closeMenu : undefined}>
             {item.name}
           </a>

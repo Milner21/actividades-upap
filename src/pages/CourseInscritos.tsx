@@ -2,10 +2,10 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '../utils/supabaseClient'; // Cliente de Supabase
 import { useParams, useNavigate } from 'react-router-dom';
-import { Inscrito } from '../utils/Types';
+import { Inscripciones } from '../types/Course';
 
 const CourseInscritos = () => {
-  const [inscritos, setInscritos] = useState<Inscrito[]>([]); // Usamos el tipo Inscrito en el estado;
+  const [inscritos, setInscritos] = useState<Inscripciones[]>([]); // Usamos el tipo Inscrito en el estado;
   const { id } = useParams(); // Obtenemos el ID del curso desde la URL
   const navigate = useNavigate();
 

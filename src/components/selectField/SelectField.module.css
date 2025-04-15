@@ -1,0 +1,80 @@
+.fieldRoot {
+  display: flex;
+  flex-direction: column;
+  justify-self: center;
+  gap: 2px;
+  width: 100%;
+  max-width: 350px;
+  margin-block: 0.5rem;
+}
+
+.fieldLabel {
+  font-size: 14px;
+  font-weight: bold;
+  color: var(--text-color-red);
+  text-align: left;
+}
+
+.Select {
+  padding: 12px 16px;
+  border: 1px solid var(--border-inactive);
+  border-radius: 8px;
+  font-size: 16px;
+  outline: none;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.Select:focus-within {
+  border-color: #720f0f;
+  box-shadow: 0 0 8px rgba(181, 63, 63, 0.3);
+}
+
+.SelectIcon {
+  margin-left: 8px;
+  color: #720f0f;
+}
+
+.Positioner {
+  z-index: 10;
+}
+
+.Popup {
+  background: white;
+  border: 1px solid var(--border-inactive);
+  border-radius: 8px;
+  padding: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.Item {
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 6px;
+}
+
+.Item:hover {
+  background-color: #f5f5f5;
+}
+
+.ItemIndicator {
+  display: inline-block;
+  margin-right: 6px;
+}
+
+.ItemIndicatorIcon {
+  color: #720f0f;
+}
+
+.ItemText {
+  display: inline-block;
+}
+
+.ScrollArrow {
+  height: 10px;
+  color: #720f0f;
+}
