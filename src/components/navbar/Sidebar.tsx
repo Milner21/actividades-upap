@@ -7,13 +7,14 @@ interface SidebarProps {
 }
 
 const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
+  const closeMenu = () => setIsOpen(false);
   return (
     <div className={`${styles.sidebar} ${isOpen ? styles.open : ''}`}>
       <button className={styles.closeButton} onClick={() => setIsOpen(false)}>
         ✖
       </button>
       <nav>
-        <NavLinks isMobile/>
+        <NavLinks isMobile closeMenu={closeMenu}/>
       </nav>
     </div>
   );

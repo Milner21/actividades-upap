@@ -5,6 +5,7 @@ export interface Curso {
     fecha: string;
     hora: string;
     imagenUrl?: string;
+    estado: boolean;
   }
 
   export interface Inscripciones {

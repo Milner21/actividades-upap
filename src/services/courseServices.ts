@@ -16,6 +16,7 @@ export const createCourseInDB = async (
           fecha: formData.fecha,
           hora: formData.hora,
           imagen_url: formData.imagenUrl,
+          estado: "true",
         },
       ])
       .select('id') // Obtener el ID del curso insertado

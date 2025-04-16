@@ -13,6 +13,7 @@ const initialCourseState: Curso = {
   cupos: 1,
   fecha: '',
   hora: '',
+  estado: true,
 };
 
 const CreateCourseForm = () => {

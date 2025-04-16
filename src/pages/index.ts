@@ -1,17 +1,18 @@
 import { Home } from './home';
-import { CreateCourse } from './admin/course';
-import { CoursesPage } from './admin/course';
-import Admin from './Admin';
+import { CreateCourse, CoursesPage, RegisterUser,CourseManager } from './admin';
 import CourseInscritos from './CourseInscritos';
 import Register from './Register';
 import Registration from './registration';
+import Login from './login';
 
-export { 
-    Home, 
-    CreateCourse, 
-    CoursesPage, 
-    Admin, 
-    CourseInscritos,
-    Register,
-    Registration,
- };
+export {
+  Home,
+  CreateCourse,
+  CoursesPage,
+  CourseInscritos,
+  Register,
+  Registration,
+  Login,
+  RegisterUser,
+  CourseManager,
+};

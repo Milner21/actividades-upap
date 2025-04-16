@@ -7,6 +7,8 @@ const basePaths = {
     home: "/",
     register: "/register",
     registration: (id: string) => `/registration/${id}`,
+    login: "/login",
+    registerUser: "/user_create",
   
     // Rutas administrativas usando el prefijo dinámico
     admin: basePaths.admin, 
