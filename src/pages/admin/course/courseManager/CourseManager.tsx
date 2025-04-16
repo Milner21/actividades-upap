@@ -1,7 +1,7 @@
 function CourseManager() {
     return (
         <div>
-            Listado de Cursos
+            <h1 className="titlePrimary">Listado de Eventos Creados</h1>
         </div>
     );
 }

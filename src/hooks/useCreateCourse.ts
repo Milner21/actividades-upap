@@ -4,6 +4,7 @@ import { uploadImageToStorage } from '../services/storageServices'; // Servicio 
 import { Curso as CourseFormData } from '../types/Course'; // Tipo definido para el curso
 import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
+import RoutesConfig from '../routes/RoutesConfig';
 
 
 const useCreateCourse = () => {
@@ -29,7 +30,7 @@ const useCreateCourse = () => {
       await createCourseInDB({ ...formData, imagenUrl: imageUrl });
 
       toast.success('Curso creado con éxito 🎉');
-      navigate("/admin");
+      navigate(RoutesConfig.admin);
 
     } catch (error) {
       console.error('Error al crear el curso:', error);

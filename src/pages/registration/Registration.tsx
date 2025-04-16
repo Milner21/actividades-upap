@@ -1,12 +1,12 @@
 import { useParams } from 'react-router-dom';
-import { InscripcionForm } from '../../components';
+import RegistrationForm from './RegistrationForm';
 
 function Registration() {
   const { id } = useParams();
   return (
     <div>
       <h1>Formulario de inscripción</h1>
-      <InscripcionForm curso_id={String(id)} />
+      <RegistrationForm curso_id={String(id)} />
     </div>
   );
 }

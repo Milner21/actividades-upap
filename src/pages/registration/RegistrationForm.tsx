@@ -1,16 +1,15 @@
 import { FormEvent, useState } from 'react';
-import styles from './InscripcionForm.module.css';
 import { useCreateInscripcion } from '../../hooks/useCreateInscripcion';
 import { useNavigate } from 'react-router-dom';
-import TextField from '../textfield';
-import SelectField from '../selectField/SelectField';
 import { SEMESTRES } from '../../utils/semestres';
+import { TextField } from '../../components';
+import SelectField from '../../components/selectField/SelectField';
 
 interface InscripcionProps {
   curso_id: string;
 }
 
-const InscripcionForm = ({ curso_id }: InscripcionProps) => {
+const RegistrationForm = ({ curso_id }: InscripcionProps) => {
   const [formData, setFormData] = useState({
     nombre: '',
     telefono: '',
@@ -51,9 +50,9 @@ const InscripcionForm = ({ curso_id }: InscripcionProps) => {
   };
 
   return (
-    <div className={styles.formContent}>
-      <form onSubmit={handleSubmit} className={styles.form}>
-        <h2 className={styles.title}>Completa los campos</h2>
+    <div className="formContent">
+      <form onSubmit={handleSubmit} className="form">
+        <h2>Completa los campos</h2>
         <TextField
           name="nombre"
           label="Nombre y Apellido"
@@ -93,17 +92,19 @@ const InscripcionForm = ({ curso_id }: InscripcionProps) => {
           placeholder="Seleccione un semestre"
         />
 
-        <div className={styles.buttonContainer}>
+        <div className="divider"></div>
+
+        <div className="buttonFormContainer">
           <button
             type="button"
-            className={`${styles.button} ${styles.backButton}`}
+            className="button buttonRed"
             onClick={handleGoBack}
           >
             Regresar
           </button>
           <button
             type="submit"
-            className={`${styles.button} ${styles.submitButton}`}
+            className="button buttonSuccess"
             disabled={loading}
           >
             {loading ? 'Enviando...' : 'Inscribirse'}
@@ -114,4 +115,4 @@ const InscripcionForm = ({ curso_id }: InscripcionProps) => {
   );
 };
 
-export default InscripcionForm;
+export default RegistrationForm;

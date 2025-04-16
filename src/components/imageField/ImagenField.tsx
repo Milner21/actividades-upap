@@ -31,7 +31,7 @@ const ImageFieldCustom: FC<ImageFieldProps> = ({ label, name, onChange }) => {
             onChange={handleFileChange}
             id={name}
           />
-          <label htmlFor={name} className={styles.uploadButton}>
+          <label htmlFor={name} className={`button buttonRed ${styles.uploadButton}`}>
             Seleccionar archivo
           </label>
         </div>

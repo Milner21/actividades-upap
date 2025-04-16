@@ -23,30 +23,18 @@
 }
 /* Estilizar label de subida de archivo */
 .fieldLabel {
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  font-weight: 500;
-  font-weight: bold;
-  user-select: none;
-  color: var(--text-color-red);
-  text-align: left;
-  width: 100%;
+  font-size: 14px;
+    font-weight: bold;
+    color: var(--text-color-red);
+    text-align: left;
 }
 
 /* Estilizar el botón de subida de archivo */
 .uploadButton {
   display: inline-block;
   padding: 12px 16px;
-  font-size: 16px;
-  font-weight: bold;
-  color: white;
-  background-color: var(--text-color-red);
-  border-radius: 8px;
-  text-align: center;
   cursor: pointer;
-  transition: background 0.3s ease;
   width: 200px;
-  border: solid 1px var(--text-color-red);
 }
 
 .uploadButton:hover {

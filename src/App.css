@@ -1,7 +1,7 @@
 #root {
   width: 100%;
-  margin: 0; 
-  text-align: center;   
+  margin: 0;
+  text-align: center;
 }
 
 :root {
@@ -11,9 +11,97 @@
   --text-color-hover: #d3d3d3;
   --border-inactive: #ccc;
   --text-color-red: #720f0f;
-  --success: oklch(44.8% 0.119 151.328);
+  --success: rgba(55, 128, 92, 1);
 }
-.container{
+
+h1{
+  margin: 0;
+}
+
+.titlePrimary {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.container {
   padding-top: 100px;
-  min-height:calc(100vh - 144px);
+  min-height: calc(100vh - 144px);
+}
+
+.formContent {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  padding: 0;
+  margin: auto;
+}
+
+.form {
+  width: 100%;
+  max-width: 450px;
+  margin: 20px;
+  border-radius: 10px;
+  border: solid 1px var(--border-inactive);
+  padding: 1.5rem;
+}
+
+.divider {
+  margin: 20px 0;
+  border: 0;
+  height: 1px;
+  background-color: #ccc;
+}
+
+.buttonFormContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.button {
+  padding: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 150px; /* Tamaño máximo */
+  text-align: center;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.4);
+  color: white;
+}
+.button:hover {
+  background-color: #fff;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.4);
+}
+
+.buttonRed {
+  background-color: var(--text-color-red);
+  border: solid 1px var(--text-color-red);
+}
+
+.buttonRed:hover {
+  color: var(--text-color-red);
+}
+
+.buttonRed:active {
+  background-color: #ffc5c5;
+}
+
+.buttonSuccess{
+  background-color: var(--success);
+  border: solid 1px var(--success);
+}
+
+.buttonSuccess:hover {
+  color: var(--success);
+}
+
+.buttonSuccess:active {
+  background-color: rgba(55, 128, 92, 0.5)
 }

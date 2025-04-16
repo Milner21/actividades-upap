@@ -24,7 +24,7 @@ const RegisterUser = () => {
   return (
     <div className={styles.formContent}>
       <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
-        <h2>Registrarse</h2>
+        <h2>Registro de usuarios</h2>
         {/* TextField para el nombre de usuario */}
         <TextField
           label="Nombre de Usuario"

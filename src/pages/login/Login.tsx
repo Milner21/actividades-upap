@@ -11,7 +11,6 @@ const LoginUser = () => {
   const navigate = useNavigate();
 
   const handleLogin = async () => {
-    console.log("Intentando iniciar sesión con:", { username, password });
 
     const success = await login(username, password);
     if (success) {

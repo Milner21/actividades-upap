@@ -1,11 +1,8 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
-import useCreateCourse from '../../hooks/useCreateCourse';
-import styles from './CreateCouseForm.module.css';
-import { Curso } from '../../types/Course';
-import TextField from '../textfield/TextField';
-import NumberFieldCustom from '../numberField';
-import ImageFieldCustom from '../imageField';
 import { useNavigate } from 'react-router-dom';
+import useCreateCourse from '../../../../hooks';
+import { Curso } from '../../../../types/Course';
+import { ImageFieldCustom, NumberFieldCustom, TextField } from '../../../../components';
 
 const initialCourseState: Curso = {
   id: 0,
@@ -33,12 +30,6 @@ const CreateCourseForm = () => {
     navigate(-1); // Navegar a la página anterior
   };
 
-
-  /*const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files ? e.target.files[0] : null;
-    setSelectedImage(file); // Usar un estado (si es React) para guardar el archivo seleccionado
-  };*/
-
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
@@ -51,8 +42,8 @@ const CreateCourseForm = () => {
   };
 
   return (
-    <div className={styles.formContent}>
-      <form onSubmit={handleSubmit} className={styles.form}>
+    <div className="formContent">
+      <form onSubmit={handleSubmit} className="form">
         <TextField
           name="nombre"
           label="Nombre"
@@ -94,20 +85,20 @@ const CreateCourseForm = () => {
         />
 
         {/* Divider */}
-        <hr className={styles.divider} />
+        <hr className="divider" />
 
         {/* Botones */}
-        <div className={styles.buttonContainer}>
+        <div className="buttonFormContainer">
           <button
             type="button"
-            className={`${styles.button} ${styles.backButton}`}
+            className="button buttonRed"
             onClick={handleGoBack}
           >
             Regresar
           </button>
           <button
             type="submit"
-            className={`${styles.button} ${styles.createButton}`}
+            className="button buttonSuccess"
             disabled={loading}
           >
             {loading ? 'Creando curso...' : 'Crear curso'}

@@ -3,16 +3,12 @@ import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useLogin } from '../../hooks';
+import { NavItems, NavItemsAdmin } from './NavItems';
 
 interface NavLinksProps {
   isMobile?: boolean;
   closeMenu?: () => void;
 }
-
-const navItems = [
-  { name: 'Inicio', path: '/' },
-  { name: 'Login', path: '/login' },
-];
 
 const NavLinks = ({ isMobile, closeMenu }: NavLinksProps) => {
   const { user } = useAuth();
@@ -32,7 +28,7 @@ const NavLinks = ({ isMobile, closeMenu }: NavLinksProps) => {
 
   return (
     <ul className={isMobile ? styles.navLinksMobile : styles.navLinks}>
-      {navItems.map((item) =>
+      {NavItems.map((item) =>
         user && item.name === 'Login' ? null : (
           <li key={item.name}>
             <a href={item.path} onClick={isMobile ? closeMenu : undefined}>
@@ -43,9 +39,13 @@ const NavLinks = ({ isMobile, closeMenu }: NavLinksProps) => {
       )}
       {user && (
         <>
-          <a href="/sp/admin" onClick={isMobile ? closeMenu : undefined}>
-            Administracion
-          </a>
+          {NavItemsAdmin.map((item) => (
+            <li key={item.name}>
+              <a href={item.path} onClick={isMobile ? closeMenu : undefined}>
+                {item.name}
+              </a>
+            </li>
+          ))}
           <li>
             <button onClick={handleLogout}>Cerrar sesión</button>
           </li>

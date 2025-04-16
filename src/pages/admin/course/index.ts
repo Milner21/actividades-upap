@@ -1,5 +1,4 @@
-import CreateCourse from './CreateCourse';
-import CoursesPage from './CoursesPage';
 import CourseManager from './courseManager';
+import CourseCreate from './courseCreate';
 
-export { CreateCourse, CoursesPage, CourseManager };
+export { CourseCreate, CourseManager };

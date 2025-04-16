@@ -1,4 +1,4 @@
 import { RegisterUser } from './user';
-import { CreateCourse, CoursesPage, CourseManager } from './course';
+import { CourseCreate, CourseManager } from './course';
 
-export { RegisterUser, CreateCourse, CoursesPage, CourseManager };
+export { RegisterUser, CourseCreate, CourseManager };
