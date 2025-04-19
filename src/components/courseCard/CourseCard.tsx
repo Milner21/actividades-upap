@@ -27,9 +27,20 @@ const CourseCard = ({ course }: CourseProps) => {
 
   return (
     <div className={styles.card}>
-      <img src={imageUrl} alt="Imagen del curso" className={styles.img} />
+      <img
+        src={imageUrl}
+        alt="Imagen del curso"
+        className={styles.img}
+        loading="lazy"
+      />
+
       <h2 className={styles.title}>{course.nombre}</h2>
-      <p className={styles.date}>Fecha: {formatDate(course.fecha)}</p>
+      <p className={styles.date}>
+        Fecha: {formatDate(course.fecha)}
+        <br />
+        <span className={styles.time}>Hora: {course.hora.slice(0, 5)} hs.</span>
+      </p>
+
       <p
         className={`${styles.slots} ${
           course.cupos > 0 ? styles.available : styles.full
