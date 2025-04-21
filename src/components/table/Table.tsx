@@ -9,7 +9,10 @@ import {
   ChevronRight,
 } from 'lucide-react';
 
-type DataRow = Record<string, string | number | boolean | null | Date>;
+type DataRow = {
+  id: string | number; // <- obligatorio
+  [key: string]: string | number | boolean | null | Date;
+};
 
 type Column = {
   key: string;
@@ -19,15 +22,18 @@ type Column = {
 type Props = {
   columns: Column[];
   data: DataRow[];
+  onRowClick?: (rowId: string | number) => void;
 };
 
-export default function Table({ columns, data }: Props) {
+export default function Table({ columns, data, onRowClick }: Props) {
   const [sortColumn, setSortColumn] = useState<string | null>(null);
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
   const start = (currentPage - 1) * rowsPerPage + 1;
   const end = Math.min(currentPage * rowsPerPage, data.length);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [sortBy] = useState<keyof DataRow>('');
 
   const handleSort = (columnKey: string) => {
     if (sortColumn === columnKey) {
@@ -38,20 +44,21 @@ export default function Table({ columns, data }: Props) {
     }
   };
 
-  const sortedData = [...data].sort((a, b) => {
-    if (!sortColumn) return 0;
+  const filteredData = data.filter((row) =>
+    columns.some((col) => {
+      const value = row[col.key];
+      if (value === null || value === undefined) return false;
+      return String(value).toLowerCase().includes(searchTerm.toLowerCase());
+    }),
+  );
 
-    const aValue = a[sortColumn];
-    const bValue = b[sortColumn];
+  const sortedData = [...filteredData].sort((a, b) =>
+    sortDirection === 'asc'
+      ? String(a[sortBy]).localeCompare(String(b[sortBy]))
+      : String(b[sortBy]).localeCompare(String(a[sortBy])),
+  );
 
-    if (aValue === null || bValue === null) return 0;
-
-    if (aValue < bValue) return sortDirection === 'asc' ? -1 : 1;
-    if (aValue > bValue) return sortDirection === 'asc' ? 1 : -1;
-    return 0;
-  });
-
-  const totalPages = Math.ceil(data.length / rowsPerPage);
+  const totalPages = Math.ceil(filteredData.length / rowsPerPage);
   const paginatedData = sortedData.slice(
     (currentPage - 1) * rowsPerPage,
     currentPage * rowsPerPage,
@@ -59,6 +66,19 @@ export default function Table({ columns, data }: Props) {
 
   return (
     <div className={styles.tableWrapper}>
+      <div className={styles.searchBar}>
+        <input
+          type="text"
+          placeholder="Buscar..."
+          value={searchTerm}
+          onChange={(e) => {
+            setSearchTerm(e.target.value);
+            setCurrentPage(1); // Reiniciar a la primera página al buscar
+          }}
+          className={styles.searchInput}
+        />
+      </div>
+
       <div className={styles.tableScroll}>
         <table className={styles.table}>
           <thead>
@@ -87,7 +107,11 @@ export default function Table({ columns, data }: Props) {
           </thead>
           <tbody>
             {paginatedData.map((row, idx) => (
-              <tr key={idx} className={styles.tr}>
+              <tr
+                key={row.id ?? idx}
+                onClick={() => onRowClick?.(row.id)}
+                className={styles.tr}
+              >
                 {columns.map((col) => (
                   <td className={styles.td} key={col.key}>
                     {row[col.key] instanceof Date
