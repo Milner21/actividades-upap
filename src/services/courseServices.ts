@@ -34,3 +34,19 @@ export const createCourseInDB = async (
     throw error; // Relanzar el error para manejarlo en un nivel superior
   }
 };
+
+export const getCourses = async (): Promise<CourseFormData[]> => {
+  const { data, error } = await supabase.from('cursos').select('*');
+
+  if (error) {
+    console.error('Error fetching courses:', error);
+    return [];
+  }
+
+  // Mapear imagen_url a imagenUrl para que coincida con el tipo
+  return data.map((course) => ({
+    ...course,
+    imagenUrl: course.imagen_url,
+    cupos: course.cupos_disponibles,
+  }));
+};

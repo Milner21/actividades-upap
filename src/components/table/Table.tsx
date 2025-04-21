@@ -8,11 +8,7 @@ import {
   ChevronLeft,
   ChevronRight,
 } from 'lucide-react';
-
-type DataRow = {
-  id: string | number; // <- obligatorio
-  [key: string]: string | number | boolean | null | Date;
-};
+import { DataRow } from '../../types/Tables';
 
 type Column = {
   key: string;
@@ -35,7 +31,6 @@ export default function Table({ columns, data, onRowClick }: Props) {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState<keyof DataRow | null>(null);
 
-
   const handleSort = (columnKey: string) => {
     if (sortColumn === columnKey) {
       setSortDirection((prev) => (prev === 'asc' ? 'desc' : 'asc'));
@@ -45,7 +40,6 @@ export default function Table({ columns, data, onRowClick }: Props) {
       setSortBy(columnKey); // <- aquí le decís qué columna usar para ordenar
     }
   };
-  
 
   const filteredData = data.filter((row) =>
     columns.some((col) => {
@@ -56,13 +50,12 @@ export default function Table({ columns, data, onRowClick }: Props) {
   );
 
   const sortedData = sortBy
-  ? [...filteredData].sort((a, b) =>
-      sortDirection === 'asc'
-        ? String(a[sortBy] ?? '').localeCompare(String(b[sortBy] ?? ''))
-        : String(b[sortBy] ?? '').localeCompare(String(a[sortBy] ?? ''))
-    )
-  : filteredData;
-
+    ? [...filteredData].sort((a, b) =>
+        sortDirection === 'asc'
+          ? String(a[sortBy] ?? '').localeCompare(String(b[sortBy] ?? ''))
+          : String(b[sortBy] ?? '').localeCompare(String(a[sortBy] ?? '')),
+      )
+    : filteredData;
 
   const totalPages = Math.ceil(filteredData.length / rowsPerPage);
   const paginatedData = sortedData.slice(
@@ -130,9 +123,29 @@ export default function Table({ columns, data, onRowClick }: Props) {
                     .filter((col) => col.key !== 'id')
                     .map((col) => (
                       <td className={styles.td} key={col.key}>
-                        {row[col.key] instanceof Date
-                          ? (row[col.key] as Date).toLocaleDateString()
-                          : String(row[col.key])}
+                        {(() => {
+                          const value = row[col.key];
+                          if (value instanceof Date) {
+                            // Formato: dd:mm:aaaa
+                            const day = String(value.getDate()).padStart(
+                              2,
+                              '0',
+                            );
+                            const month = String(value.getMonth() + 1).padStart(
+                              2,
+                              '0',
+                            );
+                            const year = value.getFullYear();
+                            return `${day}-${month}-${year}`;
+                          }
+
+                          if (col.key === 'hora' && typeof value === 'string') {
+                            // Formato: HH:MM (asumiendo que viene como "HH:MM:SS" o algo parecido)
+                            return value.slice(0, 5);
+                          }
+
+                          return String(value);
+                        })()}
                       </td>
                     ))}
                 </tr>
