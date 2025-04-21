@@ -1,5 +1,5 @@
+import { Table } from '../../../../components';
 import { columns, data } from '../../../../components/table/data';
-import Table from '../../../../components/table/Table';
 
 function CourseManager() {
   return (

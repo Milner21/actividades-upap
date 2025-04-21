@@ -33,16 +33,19 @@ export default function Table({ columns, data, onRowClick }: Props) {
   const start = (currentPage - 1) * rowsPerPage + 1;
   const end = Math.min(currentPage * rowsPerPage, data.length);
   const [searchTerm, setSearchTerm] = useState('');
-  const [sortBy] = useState<keyof DataRow>('');
+  const [sortBy, setSortBy] = useState<keyof DataRow | null>(null);
+
 
   const handleSort = (columnKey: string) => {
     if (sortColumn === columnKey) {
-      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+      setSortDirection((prev) => (prev === 'asc' ? 'desc' : 'asc'));
     } else {
       setSortColumn(columnKey);
       setSortDirection('asc');
+      setSortBy(columnKey); // <- aquí le decís qué columna usar para ordenar
     }
   };
+  
 
   const filteredData = data.filter((row) =>
     columns.some((col) => {
@@ -52,11 +55,14 @@ export default function Table({ columns, data, onRowClick }: Props) {
     }),
   );
 
-  const sortedData = [...filteredData].sort((a, b) =>
-    sortDirection === 'asc'
-      ? String(a[sortBy]).localeCompare(String(b[sortBy]))
-      : String(b[sortBy]).localeCompare(String(a[sortBy])),
-  );
+  const sortedData = sortBy
+  ? [...filteredData].sort((a, b) =>
+      sortDirection === 'asc'
+        ? String(a[sortBy] ?? '').localeCompare(String(b[sortBy] ?? ''))
+        : String(b[sortBy] ?? '').localeCompare(String(a[sortBy] ?? ''))
+    )
+  : filteredData;
+
 
   const totalPages = Math.ceil(filteredData.length / rowsPerPage);
   const paginatedData = sortedData.slice(
@@ -83,44 +89,55 @@ export default function Table({ columns, data, onRowClick }: Props) {
         <table className={styles.table}>
           <thead>
             <tr className={styles.tr}>
-              {columns.map((col) => (
-                <th
-                  key={col.key}
-                  onClick={() => handleSort(col.key)}
-                  className={`${styles.th} ${sortColumn === col.key ? styles.sorted : ''}`}
-                >
-                  {col.label}
-                  <span className={styles.sortIcon}>
-                    {sortColumn === col.key ? (
-                      sortDirection === 'asc' ? (
-                        <ChevronUp size={16} />
+              <th className={styles.th}>#</th>
+              {columns
+                .filter((col) => col.key !== 'id')
+                .map((col) => (
+                  <th
+                    key={col.key}
+                    onClick={() => handleSort(col.key)}
+                    className={`${styles.th} ${sortColumn === col.key ? styles.sorted : ''}`}
+                  >
+                    {col.label}
+                    <span className={styles.sortIcon}>
+                      {sortColumn === col.key ? (
+                        sortDirection === 'asc' ? (
+                          <ChevronUp size={16} />
+                        ) : (
+                          <ChevronDown size={16} />
+                        )
                       ) : (
-                        <ChevronDown size={16} />
-                      )
-                    ) : (
-                      <ChevronsUpDown size={16} />
-                    )}
-                  </span>
-                </th>
-              ))}
+                        <ChevronsUpDown size={16} />
+                      )}
+                    </span>
+                  </th>
+                ))}
             </tr>
           </thead>
+
           <tbody>
-            {paginatedData.map((row, idx) => (
-              <tr
-                key={row.id ?? idx}
-                onClick={() => onRowClick?.(row.id)}
-                className={styles.tr}
-              >
-                {columns.map((col) => (
-                  <td className={styles.td} key={col.key}>
-                    {row[col.key] instanceof Date
-                      ? (row[col.key] as Date).toLocaleDateString()
-                      : String(row[col.key])}
-                  </td>
-                ))}
-              </tr>
-            ))}
+            {paginatedData.map((row, idx) => {
+              const visualIndex = (currentPage - 1) * rowsPerPage + idx + 1;
+              return (
+                <tr
+                  key={row.id ?? idx}
+                  onClick={() => onRowClick?.(row.id)}
+                  className={styles.tr}
+                  id={String(row.id)} // este es el id real oculto
+                >
+                  <td className={styles.td}>{visualIndex}</td>
+                  {columns
+                    .filter((col) => col.key !== 'id')
+                    .map((col) => (
+                      <td className={styles.td} key={col.key}>
+                        {row[col.key] instanceof Date
+                          ? (row[col.key] as Date).toLocaleDateString()
+                          : String(row[col.key])}
+                      </td>
+                    ))}
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
