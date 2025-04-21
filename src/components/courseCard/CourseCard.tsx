@@ -40,7 +40,6 @@ const CourseCard = ({ course }: CourseProps) => {
         <br />
         <span className={styles.time}>Hora: {course.hora.slice(0, 5)} hs.</span>
       </p>
-
       <p
         className={`${styles.slots} ${
           course.cupos > 0 ? styles.available : styles.full

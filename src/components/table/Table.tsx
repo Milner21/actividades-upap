@@ -1,6 +1,13 @@
 // Table.tsx
 import styles from './Table.module.css';
 import { useState } from 'react';
+import {
+  ChevronsUpDown,
+  ChevronUp,
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+} from 'lucide-react';
 
 type DataRow = Record<string, string | number | boolean | null | Date>;
 
@@ -19,6 +26,8 @@ export default function Table({ columns, data }: Props) {
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
+  const start = (currentPage - 1) * rowsPerPage + 1;
+  const end = Math.min(currentPage * rowsPerPage, data.length);
 
   const handleSort = (columnKey: string) => {
     if (sortColumn === columnKey) {
@@ -62,11 +71,15 @@ export default function Table({ columns, data }: Props) {
                 >
                   {col.label}
                   <span className={styles.sortIcon}>
-                    {sortColumn === col.key
-                      ? sortDirection === 'asc'
-                        ? '🔼'
-                        : '🔽'
-                      : '🔼'}
+                    {sortColumn === col.key ? (
+                      sortDirection === 'asc' ? (
+                        <ChevronUp size={16} />
+                      ) : (
+                        <ChevronDown size={16} />
+                      )
+                    ) : (
+                      <ChevronsUpDown size={16} />
+                    )}
                   </span>
                 </th>
               ))}
@@ -74,7 +87,7 @@ export default function Table({ columns, data }: Props) {
           </thead>
           <tbody>
             {paginatedData.map((row, idx) => (
-              <tr key={idx}>
+              <tr key={idx} className={styles.tr}>
                 {columns.map((col) => (
                   <td className={styles.td} key={col.key}>
                     {row[col.key] instanceof Date
@@ -89,7 +102,7 @@ export default function Table({ columns, data }: Props) {
       </div>
       <div className={styles.pagination}>
         <label>
-          Filas por página:
+          Filas por página:{' '}
           <select
             value={rowsPerPage}
             onChange={(e) => {
@@ -105,24 +118,25 @@ export default function Table({ columns, data }: Props) {
           </select>
         </label>
 
-        <div>
+        <div className={styles.paginationControls}>
           <button
-            className="button buttonRed"
+            className={styles.pageButton}
             disabled={currentPage === 1}
             onClick={() => setCurrentPage((p) => p - 1)}
           >
-            Anterior
+            <ChevronLeft size={18} />
           </button>
-          <span>
-            {' '}
-            Página {currentPage} de {totalPages}{' '}
+
+          <span className={styles.pageRange}>
+            {start}–{end} de {data.length}
           </span>
+
           <button
-            className="button buttonRed"
+            className={styles.pageButton}
             disabled={currentPage === totalPages}
             onClick={() => setCurrentPage((p) => p + 1)}
           >
-            Siguiente
+            <ChevronRight size={18} />
           </button>
         </div>
       </div>

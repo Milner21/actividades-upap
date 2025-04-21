@@ -1,87 +1,103 @@
-/* Table.module.css */
-
 .tableWrapper {
-  padding: 1rem;
-  background-color: #f5f5f5;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  background-color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  max-width: 100%;
 }
 
 .tableScroll {
-  overflow-x: auto; /* 🧠 El scroll horizontal va acá */
+  overflow-x: auto;
 }
 
 .table {
   width: 100%;
-  min-width: max-content;
+  min-width: 700px;
   border-collapse: collapse;
-  background-color: #fff;
-  border-radius: 8px;
-  overflow: hidden;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 0.95rem;
+  color: #333;
 }
 
 .th,
 .td {
-  padding: 0.75rem 1rem;
+  padding: 1rem;
   text-align: left;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #eee;
+  transition: background-color 0.3s ease;
   white-space: nowrap;
 }
-.sortIcon {
-  display: inline-block;
-  width: 1.2em; /* Reservamos el espacio fijo para la flecha */
-  margin-left: 0.25rem;
-  color: inherit;
-  opacity: 1;
-  transition: opacity 0.2s;
-}
-
-.th:not(.sorted) .sortIcon {
-  opacity: 0; /* Oculta visualmente si no está ordenando */
-}
-
 
 .th {
-  background-color: #f0f0f0;
-  font-weight: 500;
+  background-color: #fafafa;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #444;
   cursor: pointer;
-  user-select: none;
-  transition: background-color 0.2s ease;
+  position: relative;
 }
 
 .th:hover {
-  background-color: #e0e0e0;
+  background-color: #f1f1f1;
 }
 
 .tr:hover {
-  background-color: #f9f9f9;
-  cursor: pointer;
+  background-color: #f0f0f0; /* Color sutil al hacer hover */
+  cursor: pointer; /* Puntero tipo link */
+  transition: background-color 0.2s ease;
+}
+
+.sortIcon {
+  margin-left: 8px;
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+
+.sorted .sortIcon {
+  opacity: 1;
+  color: #d32f2f; /* rojo material para destacar ordenamiento */
 }
 
 .pagination {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
   flex-wrap: wrap;
   gap: 1rem;
+  font-size: 0.9rem;
 }
 
 .pagination select {
-  padding: 0.25rem 0.5rem;
+  padding: 0.4rem 0.6rem;
   border-radius: 6px;
   border: 1px solid #ccc;
+  background: white;
+  font-size: 0.9rem;
+  transition: border 0.2s ease;
+}
+
+.pagination select:focus,
+.pagination select:active {
+  border: 1px solid var(--text-color-red);
+  outline: none;
+  box-shadow: none;
 }
 
 .pagination button {
-  padding: 0.4rem 0.75rem;
-  border-radius: 6px;
+  background-color: #d32f2f;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: 500;
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
 
 .pagination button:hover:not(:disabled) {
-  background-color: #eaeaea;
+  background-color: #b71c1c;
 }
 
 .pagination button:disabled {
@@ -92,3 +108,30 @@
 .pagination span {
   margin: 0 0.5rem;
 }
+
+.paginationControls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.pageButton {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #333;
+  display: flex;
+  align-items: center;
+  transition: opacity 0.2s ease;
+}
+
+.pageButton:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.pageRange {
+  font-size: 0.95rem;
+  color: #555;
+}
+
