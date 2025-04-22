@@ -1,3 +1,4 @@
+import { Inscripciones } from '../types/Course';
 import { supabase } from '../utils/supabaseClient';
 
 export const inscripcionService = {
@@ -7,8 +8,15 @@ export const inscripcionService = {
     telefono: string;
     correo: string;
     semestre: string;
+    estado: boolean;
+    medio_de_pago: string;
+    asistencia: boolean;
+    fecha_inscripcion: Date;
+    fecha_modificacion?: Date;
   }) {
     try {
+      const now = new Date();
+      const utc03Date = new Date(now.getTime() - 3 * 60 * 60 * 1000);
       const { data: result, error } = await supabase.rpc(
         'registrar_inscripcion',
         {
@@ -17,6 +25,11 @@ export const inscripcionService = {
           p_telefono: data.telefono,
           p_correo: data.correo,
           p_semestre: data.semestre,
+          p_estado: false,
+          p_medio_de_pago: 'tranferencia',
+          p_asistencia: false,
+          p_fecha_inscripcion: utc03Date,
+          p_fecha_modificacion: utc03Date,
         },
       );
 
@@ -37,3 +50,25 @@ export const inscripcionService = {
     }
   },
 };
+
+export async function fetchRegistrationsInCourse(
+  courseId: string | number,
+): Promise<Inscripciones[]> {
+  try {
+    const { data, error } = await supabase
+      .from('inscripciones')
+      .select('*')
+      .eq('curso_id', courseId);
+
+    if (error) {
+      throw new Error(
+        'Error al obtener las inscripciones al evento: ' + error.message,
+      );
+    }
+
+    return data as Inscripciones[];
+  } catch (error) {
+    console.error('Error en fetchCourseRegistrations:', error);
+    throw error;
+  }
+}

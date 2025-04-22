@@ -5,6 +5,7 @@
     { "path": "./tsconfig.node.json" }
   ],
   "compilerOptions": {
+    "jsx": "react-jsx",
     "moduleResolution": "node",
     "types": ["vite/client"],
     "baseUrl": "./src"

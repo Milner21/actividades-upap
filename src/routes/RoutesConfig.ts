@@ -13,7 +13,7 @@ const basePaths = {
     // Rutas administrativas usando el prefijo dinámico
     admin: basePaths.admin, 
     createCourse: `${basePaths.admin}/crear-curso`,
-    courseInscritos: (id: string) => `${basePaths.admin}/course/${id}`, 
+    courseInscritos: (id: string) => `${basePaths.admin}/course/registration/${id}`, 
   };
   
   export default RoutesConfig;

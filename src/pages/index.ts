@@ -1,5 +1,5 @@
 import { Home } from './home';
-import { CourseCreate, RegisterUser,CourseManager } from './admin';
+import { CourseCreate, RegisterUser,CourseManager,CourseRegistrationManager } from './admin';
 import CourseInscritos from './CourseInscritos';
 import Register from './Register';
 import Registration from './registration';
@@ -14,4 +14,5 @@ export {
   Login,
   RegisterUser,
   CourseManager,
+  CourseRegistrationManager,
 };

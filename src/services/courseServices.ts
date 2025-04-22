@@ -50,3 +50,4 @@ export const getCourses = async (): Promise<CourseFormData[]> => {
     cupos: course.cupos_disponibles,
   }));
 };
+

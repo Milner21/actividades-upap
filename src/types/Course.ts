@@ -9,11 +9,15 @@ export interface Curso {
   }
 
   export interface Inscripciones {
-    id: number;
+    id: string;
     curso_id: string;
     nombre: string;
     telefono: string;
     correo: string;
     semestre: string;
+    estado: boolean;
+    medio_de_pago: string;
+    asistencia: boolean;
+    fecha_inscripcion: Date;
+    fecha_modificacion?: Date;
   }
-  

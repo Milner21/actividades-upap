@@ -1,43 +1,34 @@
-// Table.tsx
 import styles from './Table.module.css';
 import { useState } from 'react';
 import {
-  ChevronsUpDown,
-  ChevronUp,
   ChevronDown,
+  ChevronUp,
+  ChevronsUpDown,
   ChevronLeft,
   ChevronRight,
 } from 'lucide-react';
-import { DataRow } from '../../types/Tables';
+import { Column, Row } from './types';
+import { sortData } from './tableUtils';
 
-type Column = {
-  key: string;
-  label: string;
-};
-
-type Props = {
-  columns: Column[];
-  data: DataRow[];
+type Props<T> = {
+  columns: Column<Row<T>>[];
+  data: Row<T>[];
   onRowClick?: (rowId: string | number) => void;
 };
 
-export default function Table({ columns, data, onRowClick }: Props) {
-  const [sortColumn, setSortColumn] = useState<string | null>(null);
+export default function Table<T>({ columns, data, onRowClick }: Props<T>) {
+  const [sortColumn, setSortColumn] = useState<keyof T | null>(null);
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
-  const start = (currentPage - 1) * rowsPerPage + 1;
-  const end = Math.min(currentPage * rowsPerPage, data.length);
   const [searchTerm, setSearchTerm] = useState('');
-  const [sortBy, setSortBy] = useState<keyof DataRow | null>(null);
 
-  const handleSort = (columnKey: string) => {
-    if (sortColumn === columnKey) {
+  const handleSort = (key: keyof T) => {
+    if (sortColumn === key) {
       setSortDirection((prev) => (prev === 'asc' ? 'desc' : 'asc'));
     } else {
-      setSortColumn(columnKey);
+      setSortColumn(key);
       setSortDirection('asc');
-      setSortBy(columnKey); // <- aquí le decís qué columna usar para ordenar
     }
   };
 
@@ -49,15 +40,9 @@ export default function Table({ columns, data, onRowClick }: Props) {
     }),
   );
 
-  const sortedData = sortBy
-    ? [...filteredData].sort((a, b) =>
-        sortDirection === 'asc'
-          ? String(a[sortBy] ?? '').localeCompare(String(b[sortBy] ?? ''))
-          : String(b[sortBy] ?? '').localeCompare(String(a[sortBy] ?? '')),
-      )
-    : filteredData;
+  const sortedData = sortData(filteredData, sortColumn, sortDirection);
 
-  const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+  const totalPages = Math.ceil(sortedData.length / rowsPerPage);
   const paginatedData = sortedData.slice(
     (currentPage - 1) * rowsPerPage,
     currentPage * rowsPerPage,
@@ -67,96 +52,82 @@ export default function Table({ columns, data, onRowClick }: Props) {
     <div className={styles.tableWrapper}>
       <div className={styles.searchBar}>
         <input
+          className={styles.searchInput}
           type="text"
           placeholder="Buscar..."
           value={searchTerm}
           onChange={(e) => {
             setSearchTerm(e.target.value);
-            setCurrentPage(1); // Reiniciar a la primera página al buscar
+            setCurrentPage(1);
           }}
-          className={styles.searchInput}
         />
       </div>
 
       <div className={styles.tableScroll}>
         <table className={styles.table}>
           <thead>
-            <tr className={styles.tr}>
+            <tr>
               <th className={styles.th}>#</th>
-              {columns
-                .filter((col) => col.key !== 'id')
-                .map((col) => (
-                  <th
-                    key={col.key}
-                    onClick={() => handleSort(col.key)}
-                    className={`${styles.th} ${sortColumn === col.key ? styles.sorted : ''}`}
-                  >
-                    {col.label}
-                    <span className={styles.sortIcon}>
-                      {sortColumn === col.key ? (
-                        sortDirection === 'asc' ? (
-                          <ChevronUp size={16} />
-                        ) : (
-                          <ChevronDown size={16} />
-                        )
+              {columns.map((col) => (
+                <th
+                  key={String(col.key)}
+                  onClick={() => handleSort(col.key as keyof T)}
+                  className={`${styles.th} ${
+                    sortColumn === col.key ? styles.sorted : ''
+                  }`}
+                >
+                  {col.label}
+                  <span className={styles.sortIcon}>
+                    {sortColumn === col.key ? (
+                      sortDirection === 'asc' ? (
+                        <ChevronUp size={16} />
                       ) : (
-                        <ChevronsUpDown size={16} />
-                      )}
-                    </span>
-                  </th>
-                ))}
+                        <ChevronDown size={16} />
+                      )
+                    ) : (
+                      <ChevronsUpDown size={16} />
+                    )}
+                  </span>
+                </th>
+              ))}
             </tr>
           </thead>
-
           <tbody>
-            {paginatedData.map((row, idx) => {
-              const visualIndex = (currentPage - 1) * rowsPerPage + idx + 1;
-              return (
-                <tr
-                  key={row.id ?? idx}
-                  onClick={() => onRowClick?.(row.id)}
-                  className={styles.tr}
-                  id={String(row.id)} // este es el id real oculto
-                >
-                  <td className={styles.td}>{visualIndex}</td>
-                  {columns
-                    .filter((col) => col.key !== 'id')
-                    .map((col) => (
-                      <td className={styles.td} key={col.key}>
-                        {(() => {
-                          const value = row[col.key];
-                          if (value instanceof Date) {
-                            // Formato: dd:mm:aaaa
-                            const day = String(value.getDate()).padStart(
-                              2,
-                              '0',
-                            );
-                            const month = String(value.getMonth() + 1).padStart(
-                              2,
-                              '0',
-                            );
-                            const year = value.getFullYear();
-                            return `${day}-${month}-${year}`;
-                          }
-
-                          if (col.key === 'hora' && typeof value === 'string') {
-                            // Formato: HH:MM (asumiendo que viene como "HH:MM:SS" o algo parecido)
-                            return value.slice(0, 5);
-                          }
-
-                          return String(value);
-                        })()}
-                      </td>
-                    ))}
-                </tr>
-              );
-            })}
+            {paginatedData.map((row, i) => (
+              <tr
+                key={row.id}
+                onClick={() => onRowClick?.(row.id)}
+                className={styles.tr}
+              >
+                <td className={styles.td}>
+                  {(currentPage - 1) * rowsPerPage + i + 1}
+                </td>
+                {columns.map((col) => {
+                  const cellValue = row[col.key];
+                  // Convertir boolean a string si es necesario
+                  const displayValue =
+                    typeof cellValue === 'boolean'
+                      ? cellValue
+                        ? 'Sí'
+                        : 'No'
+                      : col.render
+                        ? col.render(cellValue, row)
+                        : String(cellValue ?? '');
+                  return (
+                    <td key={String(col.key)} className={styles.td}>
+                      {displayValue}
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
+
       <div className={styles.pagination}>
         <label>
-          Filas por página:{' '}
+          Filas por página:
           <select
             value={rowsPerPage}
             onChange={(e) => {
@@ -164,9 +135,9 @@ export default function Table({ columns, data, onRowClick }: Props) {
               setCurrentPage(1);
             }}
           >
-            {[5, 10, 20, 50, 100].map((val) => (
-              <option key={val} value={val}>
-                {val}
+            {[5, 10, 20, 50].map((n) => (
+              <option key={n} value={n}>
+                {n}
               </option>
             ))}
           </select>
@@ -174,21 +145,21 @@ export default function Table({ columns, data, onRowClick }: Props) {
 
         <div className={styles.paginationControls}>
           <button
-            className={styles.pageButton}
+            onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
             disabled={currentPage === 1}
-            onClick={() => setCurrentPage((p) => p - 1)}
           >
             <ChevronLeft size={18} />
           </button>
 
           <span className={styles.pageRange}>
-            {start}–{end} de {data.length}
+            {Math.min((currentPage - 1) * rowsPerPage + 1, sortedData.length)}–
+            {Math.min(currentPage * rowsPerPage, sortedData.length)} de{' '}
+            {sortedData.length}
           </span>
 
           <button
-            className={styles.pageButton}
+            onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
             disabled={currentPage === totalPages}
-            onClick={() => setCurrentPage((p) => p + 1)}
           >
             <ChevronRight size={18} />
           </button>

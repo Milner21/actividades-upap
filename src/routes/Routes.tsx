@@ -1,13 +1,13 @@
 import { Routes, Route } from 'react-router-dom';
 import {
   Home,
-  CourseInscritos,
   Register,
   Registration,
   Login,
   RegisterUser,
   CourseManager,
   CourseCreate,
+  CourseRegistrationManager,
 } from '../pages';
 import RoutesConfig from './RoutesConfig';
 import { PrivateRoute } from './PrivateRoutes';
@@ -31,7 +31,7 @@ const AppRoutes = () => {
         <Route path={RoutesConfig.createCourse} element={<CourseCreate />} />
         <Route
           path={RoutesConfig.courseInscritos(':id')}
-          element={<CourseInscritos />}
+          element={<CourseRegistrationManager />}
         />
         <Route path={RoutesConfig.registerUser} element={<RegisterUser />} />
       </Route>
