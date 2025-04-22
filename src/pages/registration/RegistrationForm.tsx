@@ -93,7 +93,7 @@ const RegistrationForm = ({ curso_id }: InscripcionProps) => {
           value={formData.semestre}
           onChange={(value) => setFormData({ ...formData, semestre: value })}
           options={SEMESTRES.map((s) => ({ label: s, value: s.toLowerCase() }))}
-          placeholder="Seleccione un semestre"
+          placeholder="Selecciona Curso"
         />
 
         <div className="divider"></div>
