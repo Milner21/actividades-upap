@@ -26,7 +26,7 @@ export const inscripcionService = {
           p_correo: data.correo,
           p_semestre: data.semestre,
           p_estado: false,
-          p_medio_de_pago: 'tranferencia',
+          p_medio_de_pago: 'transferencia',
           p_asistencia: false,
           p_fecha_inscripcion: utc03Date,
           p_fecha_modificacion: utc03Date,

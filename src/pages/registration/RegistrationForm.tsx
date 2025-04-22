@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 import { useCreateInscripcion } from '../../hooks/useCreateInscripcion';
 import { useNavigate } from 'react-router-dom';
 import { SEMESTRES } from '../../utils/semestres';
@@ -9,15 +9,23 @@ interface InscripcionProps {
   curso_id: string;
 }
 
+// Define el tipo para los datos del formulario que el usuario ingresa.
+interface FormData {
+  nombre: string;
+  telefono: string;
+  correo: string;
+  semestre: string;
+}
+
 const RegistrationForm = ({ curso_id }: InscripcionProps) => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     nombre: '',
     telefono: '',
     correo: '',
     semestre: '',
   });
 
-  const { createInscripcion, loading } = useCreateInscripcion(); // Usamos los estados del hook
+  const { createInscripcion, loading } = useCreateInscripcion();
   const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,12 +42,7 @@ const RegistrationForm = ({ curso_id }: InscripcionProps) => {
     const response = await createInscripcion(inscripcionData);
 
     if (response?.success) {
-      setFormData({
-        nombre: '',
-        telefono: '',
-        correo: '',
-        semestre: '',
-      });
+      navigate(-1);
     } else {
       console.error('Fallo en la inscripción desde el componente:', response);
     }
