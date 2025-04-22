@@ -4,10 +4,17 @@ import { useFetchCourses } from '../../../../hooks';
 import RoutesConfig from '../../../../routes/RoutesConfig';
 import { Curso } from '../../../../types/Course';
 import { useNavigate } from 'react-router-dom'; // Importa useNavigate
+import styles from './CourseManager.module.css';
+import { ArrowLeft } from 'lucide-react';
 
 function CourseManager() {
   const { courses, loading } = useFetchCourses();
   const navigate = useNavigate(); // Obtén la función navigate
+
+  const goToBack = () => {
+    navigate(-1); // Navegar a la página anterior
+  };
+
 
   const columns: Column<Curso>[] = [
     { key: 'nombre', label: 'Nombre' },
@@ -63,6 +70,11 @@ function CourseManager() {
 
   return (
     <div>
+      <div className={styles.buttonBack}>
+        <span onClick={goToBack}>
+          <ArrowLeft size={35} />
+        </span>
+      </div>
       <h1 className="titlePrimary">Listado de Cursos</h1>
       {loading ? (
         <p>Cargando...</p>

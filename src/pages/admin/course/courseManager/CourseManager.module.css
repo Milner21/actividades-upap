@@ -1,0 +1,27 @@
+.buttonBack {
+  display: flow-root;
+  margin-left: 1.5rem;
+  padding: 20;
+}
+.buttonBack span {
+  background-color: var(--text-color-red);
+  display: flex;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100%;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+}
+.buttonBack span:hover {
+  background-color: #fff;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.3);
+  color: var(--text-color-red);
+}
+.buttonBack span:active {
+  transform: scale(1.05);
+  transition: transform 0.2 ease;
+}

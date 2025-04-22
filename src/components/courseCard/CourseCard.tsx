@@ -1,7 +1,7 @@
 import styles from './CourseCard.module.css';
 import { Curso as Course } from '../../types/Course';
 import { formatDate } from '../../utils/formatDate';
-import defaultImage from '../../../public/default-course.png'; // Imagen por defecto
+import defaultImage from '../../../src/assets/default-course.png'; // Imagen por defecto
 import RoutesConfig from '../../routes/RoutesConfig';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';

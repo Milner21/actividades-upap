@@ -15,7 +15,8 @@ function CourseRegistrationManager() {
       { key: 'correo', label: 'Correo' },
       { key: 'telefono', label: 'Teléfono' },
       { key: 'semestre', label: 'Semestre' },
-      { key: 'estado', label: 'Pago' },
+      { key: 'estado', label: 'Pagó' },
+      { key: 'asistencia', label: 'Asistió' },
       { key: 'medio_de_pago', label: 'Medio de pago' },
       {
         key: 'fecha_inscripcion',
