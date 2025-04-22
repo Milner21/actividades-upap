@@ -10,7 +10,7 @@ type Registration = {
   semestre: string;
   estado: boolean;
   medio_de_pago: string;
-  asistencia: 'Asistió' | 'No asistió'; // Modificado el tipo de asistencia
+  asistencia: boolean;
   fecha_inscripcion: Date;
   fecha_modificacion?: Date;
 };
@@ -25,7 +25,7 @@ export function useFetchRegistrationsInCourse(courseId: string | number) {
       try {
         const data = await fetchRegistrationsInCourse(courseId);
         // Transformar los datos para que coincidan con la estructura del estado
-        const transformedData = data.map<Registration>(item => ({
+        const transformedData = data.map<Registration>((item) => ({
           id: String(item.id),
           curso_id: item.curso_id,
           nombre: item.nombre,
@@ -34,7 +34,7 @@ export function useFetchRegistrationsInCourse(courseId: string | number) {
           semestre: item.semestre,
           estado: item.estado,
           medio_de_pago: item.medio_de_pago,
-          asistencia: item.asistencia ? 'Asistió' : 'No asistió' as 'Asistió' | 'No asistió', // Modificado aquí
+          asistencia: item.asistencia,
           fecha_inscripcion: item.fecha_inscripcion,
           fecha_modificacion: item.fecha_modificacion,
         }));
@@ -43,7 +43,7 @@ export function useFetchRegistrationsInCourse(courseId: string | number) {
         if (err instanceof Error) {
           setError(err);
         } else {
-          setError(new Error("Se produjo un error desconocido"));
+          setError(new Error('Se produjo un error desconocido'));
         }
       } finally {
         setLoading(false);

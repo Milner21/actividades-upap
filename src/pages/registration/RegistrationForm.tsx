@@ -4,26 +4,27 @@ import { useNavigate } from 'react-router-dom';
 import { SEMESTRES } from '../../utils/semestres';
 import { TextField } from '../../components';
 import SelectField from '../../components/selectField/SelectField';
+import { Inscripciones } from '../../types/Course';
 
 interface InscripcionProps {
   curso_id: string;
 }
+const initialRegistrationState: Omit<Inscripciones, 'id' | 'fecha_modificacion'> = {
+  nombre: '',
+  telefono: '',
+  correo: '',
+  semestre: '',
+  estado: false,
+  medio_de_pago: '',
+  asistencia: false,
+  fecha_inscripcion: new Date(),
+  curso_id: '',
+};
 
-// Define el tipo para los datos del formulario que el usuario ingresa.
-interface FormData {
-  nombre: string;
-  telefono: string;
-  correo: string;
-  semestre: string;
-}
 
 const RegistrationForm = ({ curso_id }: InscripcionProps) => {
-  const [formData, setFormData] = useState<FormData>({
-    nombre: '',
-    telefono: '',
-    correo: '',
-    semestre: '',
-  });
+    const [formData, setFormData] = useState<Omit<Inscripciones, 'id' | 'fecha_modificacion'>>(initialRegistrationState);
+
 
   const { createInscripcion, loading } = useCreateInscripcion();
   const navigate = useNavigate();
