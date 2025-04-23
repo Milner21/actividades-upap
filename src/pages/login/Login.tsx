@@ -43,14 +43,14 @@ const LoginUser = () => {
         {/* Botones */}
         <div className={styles.buttonContainer}>
           <button
-            className={`${styles.button} ${styles.createButton}`}
+            className="button buttonSuccess"
             onClick={handleLogin}
             disabled={loading}
           >
             {loading ? "Ingresando..." : "Iniciar Sesión"}
           </button>
           <button
-            className={`${styles.button} ${styles.backButton}`}
+            className="button buttonRed"
             onClick={() => navigate("/")}
           >
             Cancelar

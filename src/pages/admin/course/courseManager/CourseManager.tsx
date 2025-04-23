@@ -63,7 +63,7 @@ function CourseManager() {
 
   return (
     <div>
-      <TitleAndToBack label="Listado de Cursos" />
+      <TitleAndToBack label="Eventos registrados" />
 
       {loading ? (
         <p>Cargando...</p>

@@ -9,19 +9,21 @@ const Navbar = () => {
 
   return (
     <header className={styles.navbar}>
-      <div className={styles.logo}>
-        <img src={logo} alt="Logo" />
+      <div className={styles.navbarContent}>
+        <div className={styles.logo}>
+          <img src={logo} alt="Logo" />
+        </div>
+
+        <nav className={styles.desktopNav}>
+          <NavLinks />
+        </nav>
+
+        <button className={styles.hamburger} onClick={() => setIsOpen(true)}>
+          ☰
+        </button>
+
+        <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
       </div>
-
-      <nav className={styles.desktopNav}>
-        <NavLinks />
-      </nav>
-
-      <button className={styles.hamburger} onClick={() => setIsOpen(true)}>
-        ☰
-      </button>
-
-      <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
     </header>
   );
 };

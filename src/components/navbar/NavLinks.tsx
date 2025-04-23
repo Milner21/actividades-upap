@@ -47,7 +47,7 @@ const NavLinks = ({ isMobile, closeMenu }: NavLinksProps) => {
             </li>
           ))}
           <li>
-            <button onClick={handleLogout}>Cerrar sesión</button>
+            <button onClick={handleLogout} className={styles.btnCloseSession}>Cerrar sesión</button>
           </li>
         </>
       )}
