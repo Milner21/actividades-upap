@@ -5,8 +5,9 @@
   align-items: center;
 }
 .titleContent h1{
-  margin-top: 20px;
+  margin: 0;
   margin-left: 20px;
+  margin-right: .3rem;
 }
 .titleContent span {
   background-color: var(--text-color-red);
