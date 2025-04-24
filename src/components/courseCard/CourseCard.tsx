@@ -25,6 +25,24 @@ const CourseCard = ({ course }: CourseProps) => {
     navigate(RoutesConfig.registration(String(course.id)));
   };
 
+   // Función para formatear la fecha
+  const formatDate = (dateString: string) => {
+    if (!dateString) return 'Fecha no disponible';
+    try {
+      // Dividir la cadena de fecha en la 'T'
+      const datePart = dateString.split('T')[0];
+      // Dividir la parte de la fecha en año, mes y día
+      const [year, month, day] = datePart.split('-');
+      // Reordenar y formatear como DD/MM/YYYY
+      const formattedDate = `${day}/${month}/${year}`;
+      return formattedDate;
+    } catch (error) {
+      console.error('Error formatting date', error);
+      return 'Fecha inválida';
+    }
+  };
+
+
   return (
     <div className={styles.card}>
       <img

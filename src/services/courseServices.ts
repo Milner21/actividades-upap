@@ -1,11 +1,8 @@
 import { supabase } from '../utils/supabaseClient';
 import { Curso as CourseFormData } from '../types/Course';
 
-export const createCourseInDB = async (
-  formData: CourseFormData
-) => {
+export const createCourseInDB = async (formData: CourseFormData) => {
   try {
-
     // 🚀 Ahora creamos el curso con la URL de imagen correcta
     const { data: course, error: insertError } = await supabase
       .from('cursos')
@@ -16,7 +13,7 @@ export const createCourseInDB = async (
           fecha: formData.fecha,
           hora: formData.hora,
           imagen_url: formData.imagenUrl,
-          estado: "true",
+          estado: 'true',
         },
       ])
       .select('id') // Obtener el ID del curso insertado
@@ -44,10 +41,13 @@ export const getCourses = async (): Promise<CourseFormData[]> => {
   }
 
   // Mapear imagen_url a imagenUrl para que coincida con el tipo
-  return data.map((course) => ({
-    ...course,
-    imagenUrl: course.imagen_url,
-    cupos: course.cupos_disponibles,
-  }));
+  return data.map((course) => {
+    const fechaISO = course.fecha ? new Date(course.fecha).toISOString() : '';
+    return {
+      ...course,
+      imagenUrl: course.imagen_url,
+      cupos: course.cupos_disponibles,
+      fecha: fechaISO, // Devolvemos la fecha en formato ISO string
+    };
+  });
 };
-
