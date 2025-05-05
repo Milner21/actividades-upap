@@ -49,7 +49,36 @@ export const inscripcionService = {
       return { success: false, error: 'Error al inscribirse.' };
     }
   },
+
+  async deleteInscripcion(inscripcionId: string | number) {
+    try {
+      // Llamar a la función RPC para eliminar la inscripción y actualizar cupos
+      const { data: result, error } = await supabase.rpc(
+        'eliminar_inscripcion',
+        {
+          p_inscripcion_id: inscripcionId
+        }
+      );
+
+      if (error) {
+        console.error('Error de Supabase:', error.message);
+        return { success: false, error: error.message };
+      }
+
+      // Revisar el resultado
+      if (typeof result === 'string' && result !== 'Inscripción eliminada exitosamente.') {
+        return { success: false, error: result };
+      }
+
+      return { success: true, data: result };
+    } catch (error: unknown) {
+      console.error('Error en deleteInscripcion:', error);
+      return { success: false, error: 'Error al eliminar la inscripción.' };
+    }
+  },
 };
+
+
 
 export async function fetchRegistrationsInCourse(
   courseId: string | number,

@@ -1,0 +1,15 @@
+.button{
+    color: #fff;
+    background-color: red;
+    border: none;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.button span {
+    margin: 4px 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
