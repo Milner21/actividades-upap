@@ -14,6 +14,7 @@ const basePaths = {
     admin: basePaths.admin, 
     createCourse: `${basePaths.admin}/crear-curso`,
     courseInscritos: (id: string) => `${basePaths.admin}/course/registration/${id}`, 
+    registrationList: `${basePaths.admin}/listado-inscriptos`
   };
   
   export default RoutesConfig;

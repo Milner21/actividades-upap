@@ -8,6 +8,7 @@ import {
   CourseManager,
   CourseCreate,
   CourseRegistrationManager,
+  RegistrationManager,
 } from '../pages';
 import RoutesConfig from './RoutesConfig';
 import { PrivateRoute } from './PrivateRoutes';
@@ -34,6 +35,7 @@ const AppRoutes = () => {
           element={<CourseRegistrationManager />}
         />
         <Route path={RoutesConfig.registerUser} element={<RegisterUser />} />
+        <Route path={RoutesConfig.registrationList} element={<RegistrationManager />} />
       </Route>
     </Routes>
   );

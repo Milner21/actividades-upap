@@ -4,7 +4,7 @@ import { useFetchRegistrationsInCourse } from '../../../../hooks';
 import { useDeleteInscripcion } from '../../../../hooks/useDeleteInscripcion';
 import { useParams } from 'react-router-dom';
 import { Inscripciones } from '../../../../types/Course';
-import { Trash2 } from 'lucide-react';
+import { Trash2, Printer } from 'lucide-react';
 import { useState } from 'react';
 import styles from './CourseRegistrationManager.module.css';
 
@@ -44,6 +44,145 @@ function CourseRegistrationManager() {
       alert('Error al eliminar la inscripción');
     } finally {
       setDeletingId(null);
+    }
+  };
+
+  const handlePrint = () => {
+    // Crear una ventana nueva para la impresión
+    const printWindow = window.open('', '_blank');
+    
+    // Verificar si la ventana se abrió correctamente
+    if (!printWindow) {
+      alert('El navegador ha bloqueado la ventana emergente. Por favor, permite las ventanas emergentes para imprimir.');
+      return;
+    }
+    
+    // Obtener la fecha actual formateada
+    const fechaActual = new Date().toLocaleDateString('es-ES', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric'
+    });
+
+    // Ordenar registros por nombre alfabéticamente
+    const sortedRegistrations = [...registrations].sort((a, b) => {
+      const nombreA = a.nombre?.toLowerCase() || '';
+      const nombreB = b.nombre?.toLowerCase() || '';
+      return nombreA.localeCompare(nombreB);
+    });
+    
+    // Generar el HTML para la tabla de impresión
+    const printContent = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <title>Listado de Inscritos</title>
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+          }
+          table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+          }
+          th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+            font-size: 12px;
+          }
+          th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+          }
+          tr:nth-child(even) {
+            background-color: #f9f9f9;
+          }
+          h1 {
+            color: #333;
+            text-align: center;
+            font-size: 18px;
+          }
+          .print-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+          }
+          .print-date {
+            font-style: italic;
+            color: #666;
+          }
+          .print-footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+            border-top: 1px solid #ddd;
+            padding-top: 10px;
+          }
+          @media print {
+            .no-print {
+              display: none;
+            }
+          }
+        </style>
+      </head>
+      <body>
+        <div class="print-header">
+          <h1>Listado de Inscritos al Evento</h1>
+          <p class="print-date">Fecha de impresión: ${fechaActual}</p>
+        </div>
+        
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nombre</th>
+              <th>Correo</th>
+              <th>Teléfono</th>
+              <th>Semestre</th>
+              <th>Pagó</th>
+              <th>Asistió</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${sortedRegistrations.map((registro, index) => `
+              <tr>
+                <td>${index + 1}</td>
+                <td>${registro.nombre || ''}</td>
+                <td>${registro.correo || ''}</td>
+                <td>${registro.telefono || ''}</td>
+                <td>${registro.semestre || ''}</td>
+                <td>${registro.estado || ''}</td>
+                <td>${registro.asistencia || ''}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+        
+        <div class="print-footer">
+          <p>Total de inscripciones: ${sortedRegistrations.length}</p>
+        </div>
+        
+        <script>
+          window.onload = function() {
+            window.print();
+          }
+        </script>
+      </body>
+      </html>
+    `;
+    
+    try {
+      // Escribir el contenido en la nueva ventana y imprimir
+      printWindow.document.open();
+      printWindow.document.write(printContent);
+      printWindow.document.close();
+    } catch (error) {
+      console.error('Error al preparar la impresión:', error);
+      alert('Ha ocurrido un error al preparar la impresión.');
     }
   };
 
@@ -116,9 +255,36 @@ function CourseRegistrationManager() {
   }
 
   return (
-    <div>
+    <div style={{ position: 'relative', minHeight: '400px' }}>
       <TitleAndToBack label="Listado de inscritos al evento" />
+
       <Table columns={columns} data={registrations} />
+      
+      {/* Botón flotante de impresión */}
+      <button
+        onClick={handlePrint}
+        className={styles.printButton}
+        style={{
+          position: 'fixed',
+          bottom: '30px',
+          right: '30px',
+          backgroundColor: '#3B82F6',
+          color: 'white',
+          borderRadius: '50%',
+          width: '56px',
+          height: '56px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          border: 'none',
+          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+          cursor: 'pointer',
+          zIndex: 1000,
+        }}
+        title="Imprimir listado"
+      >
+        <Printer size={24} />
+      </button>
     </div>
   );
 }

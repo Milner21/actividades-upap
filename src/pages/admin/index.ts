@@ -3,6 +3,7 @@ import {
   CourseCreate,
   CourseManager,
   CourseRegistrationManager,
+  RegistrationManager
 } from './course';
 
-export { RegisterUser, CourseCreate, CourseManager, CourseRegistrationManager };
+export { RegisterUser, CourseCreate, CourseManager, CourseRegistrationManager,RegistrationManager };
