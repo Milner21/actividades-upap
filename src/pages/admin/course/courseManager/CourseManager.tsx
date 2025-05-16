@@ -1,3 +1,4 @@
+import { Plus } from 'lucide-react';
 import { Table, TitleAndToBack } from '../../../../components';
 import { Column } from '../../../../components/table/types';
 import { useFetchCourses } from '../../../../hooks';
@@ -8,6 +9,10 @@ import { useNavigate } from 'react-router-dom';
 function CourseManager() {
   const { courses, loading } = useFetchCourses();
   const navigate = useNavigate(); // Obtén la función navigate
+
+  const handleAdd = () => {
+    navigate(RoutesConfig.createCourse);
+  };
 
   const columns: Column<Curso>[] = [
     { key: 'nombre', label: 'Nombre' },
@@ -73,6 +78,29 @@ function CourseManager() {
           }}
         />
       )}
+      <button
+        onClick={handleAdd}
+        style={{
+          position: 'fixed',
+          bottom: '30px',
+          right: '30px',
+          backgroundColor: '#3B82F6',
+          color: 'white',
+          borderRadius: '50%',
+          width: '56px',
+          height: '56px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          border: 'none',
+          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+          cursor: 'pointer',
+          zIndex: 1000,
+        }}
+        title="Imprimir listado"
+      >
+        <Plus size={24} />
+      </button>
     </div>
   );
 }
